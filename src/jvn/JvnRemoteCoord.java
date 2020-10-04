@@ -4,7 +4,9 @@
  * This interface defines the remote interface provided by the Javanaise coordinator
  * Contact: 
  *
- * Authors: 
+ * Authors:
+ *      Chouaib Mounaime
+ *      Emeziem Uwalaka
  */
 
 package jvn;
@@ -74,7 +76,6 @@ public interface JvnRemoteCoord extends Remote {
 	**/
   public void jvnTerminate(JvnRemoteServer js)
 	 throws java.rmi.RemoteException, JvnException;
-
- }
+}
 
 

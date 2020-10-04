@@ -5,7 +5,9 @@
  * This interface is intended to be invoked by the Javanaise coordinator 
  * Contact: 
  *
- * Authors: 
+ * Authors:
+ *      Chouaib Mounaime
+ *      Emeziem Uwalaka
  */
 
 package jvn;

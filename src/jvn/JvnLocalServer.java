@@ -5,7 +5,9 @@
  * An application uses the Javanaise service through the local interface provided by the Jvn server 
  * Contact: 
  *
- * Authors: 
+ * Authors:
+ *       Chouaib Mounaime
+ *       Emeziem Uwalaka
  */
 
 package jvn;

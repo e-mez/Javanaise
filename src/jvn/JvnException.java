@@ -2,7 +2,9 @@
  * JAVANAISE API
  * Contact: 
  *
- * Authors:  
+ * Authors:
+ *        Chouaib Mounaime
+ *        Emeziem Uwalaka
  */
 
 package jvn;

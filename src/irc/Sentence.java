@@ -1,29 +1,34 @@
 /***
- * Sentence class : used for keeping the text exchanged between users
+ * Sentence class : used for representing the text exchanged between users
  * during a chat application
- * Contact: 
+ * Contact:
  *
- * Authors: 
+ * Authors:
+ *      Chouaib Mounaime
+ *      Emeziem Uwalaka
  */
-
 package irc;
 
-public class Sentence implements java.io.Serializable {
-	/**
-	 * 
-	 */
+import java.io.Serializable;
+
+public class Sentence implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	String 	data;
-  
+	String data;
+
 	public Sentence() {
 		data = new String("");
 	}
-	
+
 	public void write(String text) {
 		data = text;
 	}
 	public String read() {
-		return data;	
+		return data;
 	}
-	
+
+	@Override
+	public String toString() {
+		return data;
+	}
 }
