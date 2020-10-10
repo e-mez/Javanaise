@@ -1,12 +1,12 @@
 package irc;
 
-import jvn.Annotation;
+import jvn.JvnAnnotation;
 
 public interface Sentence_itf {
-    @Annotation(methodType="write")
+    @JvnAnnotation(operation ="write")
     public void write(String text);
 
-    @Annotation(methodType="read")
+    @JvnAnnotation(operation ="read")
     public String read();
 }
 
