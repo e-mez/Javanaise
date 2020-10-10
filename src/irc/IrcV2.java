@@ -9,17 +9,17 @@
 
 package irc;
 
-import java.awt.*;
-import java.awt.event.*;
-
 import jvn.JvnException;
-import jvn.JvnServerImpl;
 import jvn.JvnObject;
+import jvn.JvnServerImpl;
 
-import java.io.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 
-public class Irc {
+public class IrcV2 {
 	public TextArea	text;
 	public TextField data;
 	Frame frame;
@@ -54,7 +54,7 @@ public class Irc {
 	 * IRC Constructor
 	 @param jo the JVN object representing the Chat
 	 **/
-	public Irc(JvnObject jo) {
+	public IrcV2(JvnObject jo) {
 		sentence = jo;
 		frame=new Frame();
 		frame.setLayout(new GridLayout(1,1));
@@ -65,10 +65,10 @@ public class Irc {
 		data=new TextField(40);
 		frame.add(data);
 		Button read_button = new Button("read");
-		read_button.addActionListener(new readListener(this));
+		read_button.addActionListener(new readListenerV2(this));
 		frame.add(read_button);
 		Button write_button = new Button("write");
-		write_button.addActionListener(new writeListener(this));
+		write_button.addActionListener(new writeListenerV2(this));
 		frame.add(write_button);
 		frame.setSize(545,201);
 		text.setBackground(Color.black);
@@ -80,10 +80,10 @@ public class Irc {
 /**
  * Internal class to manage user events (read) on the CHAT application
  **/
-class readListener implements ActionListener {
-	Irc irc;
+class readListenerV2 implements ActionListener {
+	IrcV2 irc;
 
-	public readListener (Irc i) {
+	public readListenerV2 (IrcV2 i) {
 		irc = i;
 	}
 
@@ -114,10 +114,10 @@ class readListener implements ActionListener {
 /**
  * Internal class to manage user events (write) on the CHAT application
  **/
-class writeListener implements ActionListener {
-	Irc irc;
+class writeListenerV2 implements ActionListener {
+	IrcV2 irc;
 
-	public writeListener (Irc i) {
+	public writeListenerV2 (IrcV2 i) {
 		irc = i;
 	}
 

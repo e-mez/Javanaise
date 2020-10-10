@@ -11,13 +11,17 @@ package irc;
 
 import java.io.Serializable;
 
-public class Sentence implements Serializable {
+public class Sentence implements Serializable, Sentence_itf {
 
 	private static final long serialVersionUID = 1L;
 	String data;
 
 	public Sentence() {
 		data = new String("");
+	}
+
+	public Sentence(String str) {
+		data = new String(str);
 	}
 
 	public void write(String text) {

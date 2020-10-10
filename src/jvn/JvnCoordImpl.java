@@ -24,8 +24,9 @@ public class JvnCoordImpl extends UnicastRemoteObject implements JvnRemoteCoord 
     private static final long serialVersionUID = 1L;
     private static JvnCoordImpl coord = null;
 
-    private  int jvnObjectId;
+    private int jvnObjectId;
 
+    // Map of JVN objects
     private HashMap<String, JvnObject> jvnObjectsMap;
     private HashMap<Integer, String> jvnObjectIdMap;
 
@@ -65,7 +66,6 @@ public class JvnCoordImpl extends UnicastRemoteObject implements JvnRemoteCoord 
                 System.err.println(e.getMessage());
             }
         }
-
         return coord;
     }
 
@@ -153,7 +153,10 @@ public class JvnCoordImpl extends UnicastRemoteObject implements JvnRemoteCoord 
      * @throws java.rmi.RemoteException, JvnException
      **/
     synchronized public Serializable jvnLockWrite(int joi, JvnRemoteServer js) throws java.rmi.RemoteException, JvnException {
-
+        if(!jvnObjectIdMap.containsKey(joi) ) {
+            System.out.println("Object with id \"" + joi + "\" not found");
+            return null;
+        }
         JvnRemoteServer writer = jvnObjectWriter.get(joi);
         Serializable object = null;
         String name = jvnObjectIdMap.get(joi);

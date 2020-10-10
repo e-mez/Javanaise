@@ -12,6 +12,8 @@
 
 package jvn;
 
+import irc.Sentence;
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -19,6 +21,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class JvnServerImpl extends UnicastRemoteObject implements JvnLocalServer, JvnRemoteServer {
 
@@ -219,6 +222,51 @@ public class JvnServerImpl extends UnicastRemoteObject implements JvnLocalServer
 		if ( obj != null)
 			return obj.jvnInvalidateWriterForReader();
 		else
-			throw new JvnException("Object with id "+joi+" not found");	};
+			throw new JvnException("Object with id "+joi+" not found");
+	}
+
+
+	public static void main(String argv[]) {
+		Scanner sc = new Scanner(System.in);
+		try {
+			JvnServerImpl js = JvnServerImpl.jvnGetServer();
+
+			for( String arg : argv){
+				JvnObject jo = js.jvnLookupObject(arg);
+				if (jo == null) {
+					jo = js.jvnCreateObject(new Sentence(arg));
+					js.jvnRegisterObject(arg, jo);
+					Thread.sleep(5000);
+				}
+			}
+			String str = "";
+			while (str != "exit"){
+				str = sc.nextLine();
+				String[] params = str.split(" ");
+				JvnObject jo = js.jvnLookupObject(params[1]);
+				if (jo == null) {
+					jo = js.jvnCreateObject(new Sentence(params[1]));
+					js.jvnRegisterObject(params[1], jo);
+				}
+				switch(params[0]){
+					case "read" :
+						jo.jvnLockRead();
+						String readStr = ((Sentence)jo.jvnGetSharedObject()).read();
+						System.out.println(str);
+						jo.jvnUnLock();
+						break;
+					case "write":
+						jo.jvnLockWrite();
+						((Sentence)jo.jvnGetSharedObject()).write(params[2]);
+						jo.jvnUnLock();
+						break;
+				}
+			}
+
+		} catch (Exception e) {
+			System.out.println("JvnServer problem : " + e.toString());
+			e.printStackTrace();
+		}
+	}
 
 }

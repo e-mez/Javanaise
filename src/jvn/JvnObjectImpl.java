@@ -9,21 +9,10 @@ public class JvnObjectImpl implements JvnObject {
     private int objId;
     private Serializable object;
 
-    public JvnObjectImpl() {
-        super();
-        this.lockState = LockState.W;
-    }
-
     public JvnObjectImpl(int objId, Serializable obj) throws JvnException {
         this.objId = objId;
         this.object = obj;
         this.setLockState(LockState.W);
-    }
-
-    public JvnObjectImpl(int id) {
-        super();
-        this.lockState = LockState.W;
-        this.objId = id;
     }
 
     public void jvnLockRead() throws JvnException {
@@ -159,6 +148,7 @@ public class JvnObjectImpl implements JvnObject {
     @Override
     public String toString() {
         return  "ObjectID = " + objId +
+                "  LockState = "+ lockState.toString() +
                 "  Value = " + object;
     }
 
