@@ -28,7 +28,7 @@ public class Burst1 {
 	 **/
 	public static void main(String argv[]) {
 		try {
-			Sentence_itf sentence = (Sentence) JvnProxy.newInstance(new Sentence());
+			Sentence_itf sentence = (Sentence) JvnProxy.newInstance(new Sentence(), "IRC");
 			
 			int i = 0, n = 0;
 			Random rand = new Random();
