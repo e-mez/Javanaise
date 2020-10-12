@@ -3,6 +3,7 @@ package irc;
 import jvn.JvnAnnotation;
 
 public interface Sentence_itf {
+
     @JvnAnnotation(operation ="write")
     public void write(String text);
 
