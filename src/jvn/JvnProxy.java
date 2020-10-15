@@ -24,7 +24,7 @@ public class JvnProxy implements InvocationHandler {
             JvnServerImpl js = JvnServerImpl.jvnGetServer();
             jo = js.jvnLookupObject(name);
             if (jo == null) {
-                jo = js.jvnCreateObject( new Sentence());
+                jo = js.jvnCreateObject(obj);
                 jo.jvnUnLock();
                 js.jvnRegisterObject(name, jo);
             }
@@ -47,20 +47,22 @@ public class JvnProxy implements InvocationHandler {
             // On verifie les annotations et on prend le verrou si necessaire avant l'invocation de la methode
             if(method.isAnnotationPresent(JvnAnnotation.class)) {
                 // Cas d'une lecture
-                if(method.getAnnotation(JvnAnnotation.class).operation().equals("read")) {
+                if(method.getAnnotation(JvnAnnotation.class).operation().equals("read") ||
+                        method.getAnnotation(JvnAnnotation.class).operation().equals("debug")) {
                     this.object.jvnLockRead();
+                    // On invoke la methode puis on relache le verrou
+                    newObject = method.invoke(this.object.jvnGetSharedObject(), args);
                 }
                 // Cas d'une ecriture
                 else if(method.getAnnotation(JvnAnnotation.class).operation().equals("write")) {
                     this.object.jvnLockWrite();
+                    // On invoke la methode puis on relache le verrou
+                    method.invoke(this.object.jvnGetSharedObject(), args);
                 }
                 else {
                     throw new JvnException("method invocation error");
                 }
             }
-
-            // On invoke la methode puis on relache le verrou
-            newObject = method.invoke(this.object.jvnGetSharedObject(), args);
             this.object.jvnUnLock();
         }
         catch (Exception e) {

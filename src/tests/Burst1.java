@@ -33,13 +33,14 @@ public class Burst1 {
 				n = rand.nextInt(2);
 				if (n == 0) {
 					sentence.read();
-					System.out.println("burst read\n");
+					System.out.print("Read mode => ");
 				}
 				else {
-					sentence.write("burst write " + ++i);
-					System.out.println("burst write \n");
+					sentence.write("" + ++i);
+					System.out.print("Write mode => ");
 				}
-				Thread.sleep(2000);
+				System.out.println(sentence.debug() + "\n");
+				Thread.sleep(3000);
 			}
 			
 		} catch (Exception e) {

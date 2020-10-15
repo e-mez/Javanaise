@@ -17,7 +17,7 @@ public class Sentence implements Serializable, Sentence_itf {
 	String data;
 
 	public Sentence() {
-		data = new String("");
+		data = new String("-");
 	}
 
 	public Sentence(String str) {
@@ -30,9 +30,5 @@ public class Sentence implements Serializable, Sentence_itf {
 	public String read() {
 		return data;
 	}
-
-	@Override
-	public String toString() {
-		return data;
-	}
+	public String debug() { return "Sentence.data = " + data;}
 }

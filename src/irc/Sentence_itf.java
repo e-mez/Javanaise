@@ -9,6 +9,9 @@ public interface Sentence_itf {
 
     @JvnAnnotation(operation ="read")
     public String read();
+
+    @JvnAnnotation(operation ="debug")
+    public String debug();
 }
 
 
