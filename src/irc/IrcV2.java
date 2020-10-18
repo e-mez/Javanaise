@@ -32,33 +32,16 @@ public class IrcV2 {
 	 * create a JVN object nammed IRC for representing the Chat application
 	 **/
 	public static void main(String argv[]) throws JvnException {
+		/*
 		if (argv.length != 1 ) {
 			System.out.println("The name of your object is required\n" +
 					           "Usage : java irc.Irc <object_name>");
 			System.exit(1);
 		}
+		*/
 
-		Sentence_itf jo = (Sentence_itf) JvnProxy.newInstance(new Sentence(), argv[0]);
+		Sentence_itf jo = (Sentence_itf) JvnProxy.newInstance(new Sentence(), "IRC");
 		new IrcV2(jo);
-
-		/*try {
-			// initialize JVN
-			JvnServerImpl js = JvnServerImpl.jvnGetServer();
-			// look up the IRC object in the JVN server
-			// if not found, create it, and register it in the JVN server
-			JvnObject jo = js.jvnLookupObject("IRC");
-			if (jo == null) {
-				jo = js.jvnCreateObject((Serializable) new Sentence());
-				// after creation, I have a write lock on the object
-				jo.jvnUnLock();
-				js.jvnRegisterObject("IRC", jo);
-			}
-			// create the graphical part of the Chat application
-			new Irc(jo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		 */
 	}
 
 	/**

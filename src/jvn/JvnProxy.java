@@ -9,6 +9,8 @@ import java.lang.reflect.Method;
 import java.rmi.ServerError;
 
 public class JvnProxy implements InvocationHandler {
+    // Il faut d'abord créer un serveur local Javanaise,
+    static JvnServerImpl js = JvnServerImpl.jvnGetServer();
 
     private JvnObject object;
 
@@ -17,11 +19,9 @@ public class JvnProxy implements InvocationHandler {
     }
 
     public static Object newInstance(Serializable obj, String name) throws IllegalArgumentException, JvnException {
-        // Avant de créer une instance du proxy, il faut d'abord créer un serveur local Javanaise,
-        // ensuite faire un lookup et créer l'objet Javanaise a partir d'un object serializable
+        // faire un lookup et créer l'objet Javanaise a partir d'un object serializable
         JvnObject jo = null;
         try {
-            JvnServerImpl js = JvnServerImpl.jvnGetServer();
             jo = js.jvnLookupObject(name);
             if (jo == null) {
                 jo = js.jvnCreateObject(obj);
