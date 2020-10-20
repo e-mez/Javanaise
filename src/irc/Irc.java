@@ -38,7 +38,7 @@ public class Irc {
 			// if not found, create it, and register it in the JVN server
 			JvnObject jo = js.jvnLookupObject("IRC");
 			if (jo == null) {
-				jo = js.jvnCreateObject((Serializable) new Sentence());
+				jo = js.jvnCreateObject(new Sentence());
 				// after creation, I have a write lock on the object
 				jo.jvnUnLock();
 				js.jvnRegisterObject("IRC", jo);

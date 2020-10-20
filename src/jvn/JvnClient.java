@@ -3,19 +3,21 @@ package jvn;
 import irc.Sentence;
 import irc.Sentence_itf;
 
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class JvnClient {
     private AbstractMap<String, Sentence_itf> objects;
     private JvnRemoteCoord coordinator;
 
     public JvnClient () {
-        objects = new HashMap<>();
+        objects = new ConcurrentHashMap<>();
 
         if (coordinator == null) {
             try {
@@ -28,27 +30,76 @@ public class JvnClient {
 
     }
 
-     public void createObject(String name) throws JvnException {
-        if (!hasObject(name))
-            objects.put(name, (Sentence_itf) JvnProxy.newInstance(new Sentence(), name));
+     public void createObject(String name) throws JvnException, RemoteException {
+        if (!hasObject(name)) {
+            JvnObject jo = coordinator.jvnLookupObject(name, null);
+            if (jo == null) {
+                System.out.println("Object not found in the remote store");
+                objects.put(name, (Sentence_itf) JvnProxy.newInstance(new Sentence(), name));
+            }
+            else {
+                System.out.println("Object found in the remote store");
+                objects.put(name, (Sentence_itf) jo.jvnGetSharedObject());
+            }
+        }
+
     }
 
-    public String readObject(String name) {
-        return objects.get(name).read();
+    public String readObject(String name) throws RemoteException, JvnException {
+        String val = "";
+        Sentence_itf s = objects.get(name);
+        if (s == null) {
+            JvnObject jo = coordinator.jvnLookupObject(name, null);
+
+            if (jo == null) {
+                System.out.println("Object to read not found in the remote store");
+            }
+            else {
+                System.out.println("Object to read found in the remote store");
+                val = jo.jvnGetSharedObject().toString();
+                objects.put(name, (Sentence_itf) jo.jvnGetSharedObject());
+            }
+        }
+        else {
+            val = s.read();
+        }
+
+        return val;
+
     }
 
-    public void writeObject(String name, String val) {
+    public void writeObject(String name, String val) throws RemoteException, JvnException {
+        Sentence_itf s = objects.get(name);
+        if (s == null) {
+            JvnObject jo = coordinator.jvnLookupObject(name, null);
+
+            if (jo == null) {
+                System.out.println("Object to write to was not found in the remote store");
+            }
+            else {
+                System.out.println("Object to write to found in the remote store");
+                s = (Sentence_itf) jo.jvnGetSharedObject();
+                s.write(val);
+                objects.put(name, s);
+            }
+        }
+        else {
+            s.write(val);
+        }
+
+/*
         Sentence_itf s = objects.get(name);
         if (s != null)
             s.write(val);
         else
             System.out.println("Object '" + name + "' does not exist");
+        */
     }
 
     public int nbLocalObjects() { return objects.size(); }
 
     public void flushObjects() {
-        objects = new HashMap<>();
+        objects = new ConcurrentHashMap<>();
         System.out.println("Cache flushed\n");
     }
 
@@ -60,9 +111,9 @@ public class JvnClient {
         return false;
     }
 
-    public void showLocalObjects() {
+    public void showLocalObjects() throws RemoteException, JvnException {
         for (Map.Entry<String, Sentence_itf> m : objects.entrySet()) {
-            System.out.println(m.getKey() + " => " + m.getValue().read());
+            System.out.println(m.getKey() + " => " + this.readObject(m.getKey()) /*m.getValue().*/);
         }
         System.out.println();
     }
@@ -81,7 +132,7 @@ public class JvnClient {
         System.out.println("'q' to quit");
     }
 
-    public static void main(String[] argv) throws JvnException {
+    public static void main(String[] argv) throws JvnException, RemoteException {
         JvnClient c = new JvnClient();
         JvnClient.showMenu();
 

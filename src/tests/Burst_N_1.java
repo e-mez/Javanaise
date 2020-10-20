@@ -32,7 +32,7 @@ public class Burst_N_1 implements Runnable {
 
     static {
         try {
-            sentence = (Sentence_itf) JvnProxy.newInstance(new Sentence(), "IRC");
+            sentence = (Sentence_itf) JvnProxy.newInstance(new Sentence(),"IRC");
             fileWriter = new FileWriter(FILENAME);
             printWriter = new PrintWriter(fileWriter);
         } catch (JvnException | IOException e) {
