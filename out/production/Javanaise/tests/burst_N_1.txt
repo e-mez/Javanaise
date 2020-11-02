@@ -1,0 +1,78 @@
+Thread_0 in Read mode => Sentence.data = -
+
+Thread_1 in Read mode => Sentence.data = -
+
+Thread_2 in Read mode => Sentence.data = -
+
+Thread_2 in Write mode => Sentence.data = 1
+
+Thread_0 in Read mode => Sentence.data = 1
+
+Thread_1 in Read mode => Sentence.data = 1
+
+Thread_2 in Write mode => Sentence.data = 2
+
+Thread_1 in Write mode => Sentence.data = 1
+
+Thread_0 in Write mode => Sentence.data = 1
+
+Thread_2 in Write mode => Sentence.data = 3
+
+Thread_0 in Read mode => Sentence.data = 3
+
+Thread_1 in Write mode => Sentence.data = 2
+
+Thread_2 in Write mode => Sentence.data = 4
+
+Thread_0 in Read mode => Sentence.data = 4
+
+Thread_1 in Write mode => Sentence.data = 3
+
+Thread_0 in Read mode => Sentence.data = 3
+
+Thread_2 in Write mode => Sentence.data = 5
+
+Thread_1 in Write mode => Sentence.data = 4
+
+Thread_2 in Write mode => Sentence.data = 6
+
+Thread_1 in Write mode => Sentence.data = 5
+
+Thread_0 in Read mode => Sentence.data = 5
+
+Thread_2 in Write mode => Sentence.data = 7
+
+Thread_0 in Write mode => Sentence.data = 2
+
+Thread_1 in Write mode => Sentence.data = 6
+
+Thread_2 in Read mode => Sentence.data = 6
+
+Thread_1 in Read mode => Sentence.data = 6
+
+Thread_0 in Read mode => Sentence.data = 6
+
+Thread_0 in Write mode => Sentence.data = 3
+
+Thread_2 in Write mode => Sentence.data = 8
+
+Thread_1 in Read mode => Sentence.data = 8
+
+Thread_0 in Read mode => Sentence.data = 8
+
+Thread_1 in Write mode => Sentence.data = 7
+
+Thread_2 in Write mode => Sentence.data = 9
+
+Thread_0 in Read mode => Sentence.data = 9
+
+Thread_2 in Read mode => Sentence.data = 9
+
+Thread_1 in Write mode => Sentence.data = 8
+
+Thread_2 in Write mode => Sentence.data = 10
+
+Thread_1 in Read mode => Sentence.data = 10
+
+Thread_0 in Read mode => Sentence.data = 10
+
